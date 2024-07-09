@@ -71,8 +71,6 @@ def draw_egg_shape_guide(img):
     cv2.ellipse(img, center, (egg_width // 2, egg_height // 2),
                 0, 0, 360, (0, 255, 0), 2)
 
-    cv2.circle(img, center, 5, (0, 0, 255), -1)
-
     return img
 
 
