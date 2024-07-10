@@ -57,7 +57,7 @@ def calculate_muscle_activity(landmarks, reference, face_size):
 def calculate_relative_muscle_activity(landmarks, reference_distance):
     current_distance = np.linalg.norm(np.array([landmarks[0].x, landmarks[0].y]) -
                                       np.array([landmarks[1].x, landmarks[1].y]))
-    activity = abs((current_distance - reference_distance) / reference_distance) * 200
+    activity = abs((current_distance - reference_distance) / reference_distance) * 100
     return min(activity, 100)  # Cap activity at 100%
 
 
