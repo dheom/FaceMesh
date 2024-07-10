@@ -7,6 +7,7 @@
 import numpy as np
 import time
 from openvino.runtime import Core
+import tensorflow as tf
 
 # OpenVINO 모델 경로
 openvino_xml_path = "converted_model/face_landmark.xml"
@@ -15,7 +16,7 @@ openvino_bin_path = "converted_model/face_landmark.bin"
 # OpenVINO Core 초기화
 ie = Core()
 model = ie.read_model(model=openvino_xml_path, weights=openvino_bin_path)
-compiled_model = ie.compile_model(model=model, device_name="CPU")
+compiled_model = ie.compile_model(model=model, device_name="GPU")
 infer_request = compiled_model.create_infer_request()
 
 # 입력 데이터 준비 (랜덤 데이터 예시)
@@ -37,11 +38,8 @@ throughput = num_iterations / (end_time - start_time)
 print(f"OpenVINO 모델 평균 추론 시간: {average_inference_time} 초")
 print(f"OpenVINO 모델 처리량: {throughput} 추론/초")
 
-import numpy as np
-import time
-import tensorflow as tf
 
-# TensorFlow Lite 모델 경로
+# CPU - TensorFlow Lite 모델 경로
 tflite_model_path = ".venv/Lib/site-packages/mediapipe/modules/face_landmark/face_landmark.tflite"
 
 # TensorFlow Lite Interpreter 초기화
@@ -69,3 +67,11 @@ throughput = num_iterations / (end_time - start_time)
 
 print(f"TensorFlow Lite 모델 평균 추론 시간: {average_inference_time} 초")
 print(f"TensorFlow Lite 모델 처리량: {throughput} 추론/초")
+
+#
+# # OpenVINO 모델 평균 추론 시간: 0.0008802135944366455 초
+# # OpenVINO 모델 처리량: 1136.087884032307 추론/초
+# # INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+# # TensorFlow Lite 모델 평균 추론 시간: 0.0014851789712905883 초
+# # TensorFlow Lite 모델 처리량: 673.3195253438188 추론/초
+
